@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Validated Registration Form - Gaming Theme</title>
+  <style>
+    /* --- Gaming Theme Styles --- */
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap'); /* Pixelated font */
+
+    /* --- Animations --- */
+    @keyframes bounce { /* Bouncy effect */
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    @keyframes rotate { /* Rotating effect */
+       0% { transform: rotate(0deg) scale(1); }
+       50% { transform: rotate(5deg) scale(1.05); }
+       100% { transform: rotate(0deg) scale(1); }
+    }
+
+     @keyframes shake { /* Keep shake animation */
+      0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); }
+    }
+
+    @keyframes fadeIn { /* Slide in from left */
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Live Effect: Pulse Glow */
+    @keyframes pulseGlow {
+      0%, 100% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; box-shadow: 0 0 15px rgba(0, 255, 0, 0.5); border-color: #00ff00; }
+      50% { text-shadow: 0 0 8px #00ff00, 0 0 15px #00ff00; box-shadow: 0 0 25px rgba(0, 255, 0, 0.7); border-color: #33ff33; }
+    }
+     /* Live Effect: Background Movement */
+    @keyframes moveBackground {
+        0% { background-position: 0 0; }
+        100% { background-position: 20px 20px; } /* Adjust values for speed/direction */
+    }
+
+
+    body {
+      /* Use a pixelated font */
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px; /* Pixel fonts often need smaller base size */
+      line-height: 1.6;
+      margin: 0;
+      /* Dark background, maybe a subtle pattern or gradient */
+      background-color: #1a1a1a;
+      background-image: linear-gradient(45deg, #2a2a2a 25%, transparent 25%),
+                        linear-gradient(-45deg, #2a2a2a 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, #2a2a2a 75%),
+                        linear-gradient(-45deg, transparent 75%, #2a2a2a 75%);
+      background-size: 20px 20px;
+      color: #e0e0e0; /* Light text */
+      /* Live Effect: Apply background animation */
+      animation: moveBackground 5s linear infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    h2 {
+      color: #00ff00; /* Neon green */
+      margin-bottom: 25px;
+      /* Live Effect: Apply pulse animation to text-shadow */
+      animation: pulseGlow 2s infinite ease-in-out;
+      letter-spacing: 2px;
+      /* Remove static text-shadow if animation handles it */
+      /* text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; */
+    }
+
+    /* Form styling */
+    form {
+      background-color: rgba(30, 30, 30, 0.85); /* Semi-transparent dark */
+      padding: 25px;
+      border-radius: 0; /* Sharp edges */
+      border: 2px solid #00ff00; /* Neon border */
+      /* Live Effect: Apply pulse animation to border/shadow */
+      animation: pulseGlow 2.5s infinite ease-in-out alternate; /* Slower, alternating pulse */
+      /* Remove static box-shadow if animation handles it */
+      /* box-shadow: 0 0 15px rgba(0, 255, 0, 0.5); */
+      max-width: 450px; /* Slightly wider */
+      width: 100%;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: normal; /* Pixel font is already bold */
+      color: #00ff00; /* Neon green labels */
+      text-shadow: 0 0 3px #00ff00;
+      transition: transform 0.2s ease-out, color 0.2s ease-out; /* Add transition for focus effect */
+    }
+
+    /* Live Effect: Label animation on input focus */
+    input:focus + label, /* Doesn't work directly, need JS or different structure */
+    /* Alternative: Style label when input sibling is focused (limited use) */
+    input[type="text"]:focus ~ label, /* Example, might not match structure */
+    input[type="email"]:focus ~ label,
+    input[type="password"]:focus ~ label,
+    input[type="date"]:focus ~ label {
+        /* This CSS selector approach is tricky with current HTML. */
+        /* A JS solution or restructuring HTML (label wrapping input) is better */
+        /* For now, let's add a subtle effect directly to the label */
+    }
+     /* Let's add a subtle hover effect to labels instead for now */
+    label:hover {
+        color: #33ff33; /* Brighter green on hover */
+        transform: translateX(3px);
+    }
+
+
+    /* Input field styling */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 5px;
+      border: 1px solid #008000; /* Darker green border */
+      border-radius: 0; /* Sharp edges */
+      box-sizing: border-box;
+      background-color: #111; /* Very dark input background */
+      color: #e0e0e0; /* Light input text */
+      font-family: 'Courier New', Courier, monospace; /* Monospace for input */
+      font-size: 14px; /* Larger input font size */
+      transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    /* Input focus effect */
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="date"]:focus {
+      border-color: #00ff00; /* Neon green highlight border */
+      /* Live Effect: Apply pulse animation to box-shadow */
+      animation: pulseGlow 2s infinite ease-in-out;
+      /* box-shadow: 0 0 8px rgba(0, 255, 0, 0.6); */ /* Handled by animation */
+      outline: none;
+    }
+
+    /* Checkbox styling */
+    input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.5); /* Larger checkbox */
+      vertical-align: middle;
+      accent-color: #00ff00; /* Neon green check */
+      border-radius: 0;
+      border: 1px solid #00ff00; /* Add border for visibility */
+      background-color: #111;
+      appearance: none; /* Custom styling */
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      position: relative;
+    }
+    input[type="checkbox"]:checked {
+        background-color: #00ff00;
+    }
+     input[type="checkbox"]:checked::after { /* Custom checkmark */
+        content: 'X';
+        color: #111;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+        font-family: 'Press Start 2P', cursive;
+     }
+
+
+    label span { /* Text next to checkbox */
+        vertical-align: middle;
+        color: #cccccc; /* Slightly dimmer text */
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 12px;
+    }
+
+    /* --- Animations --- */
+    @keyframes bounce { /* Bouncy effect */
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    @keyframes rotate { /* Rotating effect */
+       0% { transform: rotate(0deg) scale(1); }
+       50% { transform: rotate(5deg) scale(1.05); }
+       100% { transform: rotate(0deg) scale(1); }
+    }
+
+     @keyframes shake { /* Keep shake animation */
+      0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); }
+    }
+
+
+    /* Submit button styling */
+    button[type="submit"] {
+      background-color: #00ff00; /* Neon green */
+      color: #111; /* Dark text */
+      padding: 12px 18px;
+      border: 2px solid #00ff00;
+      border-radius: 0; /* Sharp edges */
+      cursor: pointer;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 12px; /* Button font size */
+      width: 100%;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+      box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 10px; /* Add some space above */
+    }
+
+    button[type="submit"]:hover {
+      background-color: #111; /* Invert colors on hover */
+      color: #00ff00;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+      /* Apply rotation on hover */
+      animation: rotate 0.5s ease-in-out;
+    }
+
+    button[type="submit"]:active {
+      /* Apply bounce on active */
+      animation: bounce 0.5s ease, pulseGlow 1s infinite ease-in-out; /* Add pulse on active */
+      transform: scale(0.98); /* Slight shrink */
+    }
+
+    /* Warning text styling */
+    .warning {
+      color: #ff4136; /* Bright red for warnings */
+      font-size: 10px; /* Match body font size */
+      display: block;
+      min-height: 1.2em;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      font-weight: normal;
+      text-shadow: 0 0 3px #ff4136;
+    }
+     .warning:empty {
+        min-height: 0; margin-top: 0; margin-bottom: 15px;
+    }
+
+    /* Input error styling */
+    .input-error {
+      border: 2px solid #ff4136 !important; /* Red border */
+      animation: shake 0.3s ease-in-out;
+    }
+    .input-error:focus {
+       box-shadow: 0 0 8px rgba(255, 65, 54, 0.6); /* Red glow on focus */
+       animation: none; /* Stop pulse animation on error focus */
+    }
+     /* Style label containing checkbox on error */
+    label.input-error span {
+        color: #ff4136; /* Make label text red */
+        text-shadow: 0 0 3px #ff4136;
+    }
+     label.input-error input[type="checkbox"] {
+        border-color: #ff4136;
+        box-shadow: 0 0 5px rgba(255, 65, 54, 0.6);
+     }
+
+
+    /* Table styling */
+    table {
+      width: 100%;
+      max-width: 800px;
+      border-collapse: collapse;
+      margin-top: 30px;
+      background-color: rgba(30, 30, 30, 0.85); /* Match form */
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.5); /* Neon glow */
+      border-radius: 0; /* Sharp edges */
+      border: 2px solid #00ff00; /* Neon border */
+      overflow: hidden;
+    }
+
+    th, td {
+      border: none;
+      border-bottom: 1px dashed #008000; /* Dashed dark green separator */
+      padding: 12px;
+      text-align: left;
+      font-family: 'Courier New', Courier, monospace; /* Monospace for table data */
+      font-size: 12px;
+    }
+
+    th {
+      background-color: #111; /* Very dark header */
+      color: #00ff00; /* Neon green header text */
+      font-family: 'Press Start 2P', cursive; /* Header font */
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-bottom: 2px solid #00ff00; /* Solid neon separator */
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none; /* Remove border from last row */
+    }
+
+    /* Alternating row colors */
+    tr:nth-child(even) { background-color: rgba(40, 40, 40, 0.8); }
+    tr:nth-child(odd) { background-color: rgba(30, 30, 30, 0.8); }
+
+    tr { transition: background-color 0.25s ease-out, transform 0.2s ease-out; }
+
+    /* Row hover effect */
+    tr:hover {
+      background-color: #00ff00; /* Neon green hover */
+      color: #111; /* Dark text on hover */
+      transform: scale(1.01); /* Slight scale up */
+    }
+     tr:hover td {
+         border-bottom-color: #111; /* Darken separator on hover */
+     }
+     tr:hover td button { /* Adjust delete button color on row hover */
+         background-color: #111;
+         color: #ff4136; /* Red text */
+         border-color: #ff4136;
+     }
+
+    /* Fade-in animation for table rows */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(-20px); } /* Slide in from left */
+      to { opacity: 1; transform: translateX(0); }
+    }
+    tbody tr {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    /* Delete button in table */
+    td button {
+      background-color: #333;
+      color: #ff4136; /* Red text */
+      border: 1px solid #ff4136;
+      padding: 5px 8px;
+      border-radius: 0;
+      cursor: pointer;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 8px;
+      transition: all 0.2s ease;
+    }
+
+    td button:hover {
+      background-color: #ff4136; /* Red background */
+      color: #111; /* Dark text */
+      transform: scale(1.1); /* Scale up */
+    }
+
+  </style>
+</head>
+<body>
+
+  <h2>Register Account</h2> <!-- Changed heading text -->
+  <form id="registrationForm">
+    <label for="name">Username:</label> <!-- Changed label -->
+    <input type="text" id="name" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+    <span id="emailWarning" class="warning"></span>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" required><br><br>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" required>
+    <span id="dobWarning" class="warning"></span>
+
+    <label id="termsLabel"> <!-- Added id -->
+      <input type="checkbox" id="acceptTerms">
+      <span>Agree to Terms & Conditions</span> <!-- Changed text -->
+    </label>
+    <span id="termsWarning" class="warning"></span>
+
+    <button type="submit">Create Account</button> <!-- Changed button text -->
+  </form>
+
+  <h2>Registered Players</h2> <!-- Changed heading text -->
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th>Username</th> <!-- Changed header -->
+        <th>Email</th>
+        <th>Password</th>
+        <th>Dob</th>
+        <th>Agreed?</th> <!-- Changed header -->
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Entries will be loaded here -->
+    </tbody>
+  </table>
+
+  <script>
+    // --- JavaScript (mostly unchanged, ensure it targets correct elements) ---
+    const form = document.getElementById('registrationForm');
+    const tableBody = document.querySelector('#userTable tbody');
+
+    // Input fields
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const dobInput = document.getElementById('dob');
+    const acceptTermsCheckbox = document.getElementById('acceptTerms');
+    const termsLabel = document.getElementById('termsLabel'); // Get the label
+
+    // Warning spans
+    const emailWarning = document.getElementById('emailWarning');
+    const dobWarning = document.getElementById('dobWarning');
+    const termsWarning = document.getElementById('termsWarning');
+
+    function calculateAge(dob) {
+      const birthDate = new Date(dob);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    }
+
+    function isValidEmail(email) {
+      const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      return pattern.test(email);
+    }
+
+    function loadEntries() {
+        tableBody.innerHTML = ""; // Clear existing rows
+        const entries = JSON.parse(localStorage.getItem('userEntries')) || [];
+
+        entries.forEach((entry, index) => {
+            const row = tableBody.insertRow();
+            // CSS handles the fade-in animation
+
+            row.innerHTML = `
+            <td>${entry.name}</td>
+            <td>${entry.email}</td>
+            <td>${entry.password}</td>
+            <td>${entry.dob}</td>
+            <td>${entry.accepted ? 'Yes' : 'No'}</td> <!-- Display Yes/No -->
+            <td><button onclick="deleteEntry(${index})">Delete</button></td>
+            `;
+        });
+    }
+
+    function deleteEntry(index) {
+      const entries = JSON.parse(localStorage.getItem('userEntries')) || [];
+      entries.splice(index, 1);
+      localStorage.setItem('userEntries', JSON.stringify(entries));
+      loadEntries(); // Reload entries
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Clear previous warnings and error styles
+      emailWarning.textContent = "";
+      dobWarning.textContent = "";
+      termsWarning.textContent = "";
+      emailInput.classList.remove('input-error');
+      dobInput.classList.remove('input-error');
+      termsLabel.classList.remove('input-error'); // Use the label for checkbox error class
+
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+      const dob = dobInput.value;
+      const accepted = acceptTermsCheckbox.checked;
+
+      let isValid = true;
+
+      // Basic required checks
+      if (!name) { isValid = false; }
+      if (!password) { isValid = false; }
+
+      // Email validation
+      if (!email || !isValidEmail(email)) {
+        emailWarning.textContent = " Invalid Email Format!"; // Gaming style text
+        emailInput.classList.add('input-error');
+        isValid = false;
+      }
+
+      // DOB validation
+      const age = calculateAge(dob);
+      if (!dob) {
+          dobWarning.textContent = " Date of Birth Required!";
+          dobInput.classList.add('input-error');
+          isValid = false;
+      } else if (age < 18 || age > 55) { // Keep age validation
+        dobWarning.textContent = " Age must be 18-55!";
+        dobInput.classList.add('input-error');
+        isValid = false;
+      }
+
+      // Terms checkbox validation
+      if (!accepted) {
+        termsWarning.textContent = " Must Agree to Terms!";
+        termsLabel.classList.add('input-error');
+        isValid = false;
+      }
+
+      if (!isValid) return; // Stop if validation fails
+
+      const entry = {
+          name,
+          email,
+          password,
+          dob,
+          accepted // Store boolean true/false
+        };
+
+      const entries = JSON.parse(localStorage.getItem('userEntries')) || [];
+      entries.push(entry);
+      localStorage.setItem('userEntries', JSON.stringify(entries));
+
+      loadEntries(); // Load entries including the new one
+      form.reset(); // Reset form fields
+    });
+
+    // Add event listeners to clear errors on input/change
+    emailInput.addEventListener('input', () => {
+        if (isValidEmail(emailInput.value.trim())) {
+            emailInput.classList.remove('input-error');
+            emailWarning.textContent = "";
+        }
+    });
+
+    dobInput.addEventListener('input', () => {
+        const age = calculateAge(dobInput.value);
+        if (dobInput.value && age >= 18 && age <= 55) {
+            dobInput.classList.remove('input-error');
+            dobWarning.textContent = "";
+        } else if (!dobInput.value) {
+             dobInput.classList.remove('input-error');
+             dobWarning.textContent = "";
+        }
+    });
+
+     acceptTermsCheckbox.addEventListener('change', () => {
+        if (acceptTermsCheckbox.checked) {
+            termsLabel.classList.remove('input-error');
+            termsWarning.textContent = "";
+        }
+    });
+
+    // Load entries when the page loads
+    window.onload = loadEntries;
+
+  </script>
+
+</body>
+<!-- Removed the entire duplicate <head> section -->
+</html>
